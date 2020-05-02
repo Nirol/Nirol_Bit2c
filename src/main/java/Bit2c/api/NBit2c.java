@@ -2,7 +2,7 @@ package Bit2c.api;
 
 
 
-import Bit2c.entities.results.Private.UserBalance;
+import Bit2c.entities.results.Private.Balance.UserBalance;
 import Bit2c.entities.results.Public.OrderBook;
 import Bit2c.entities.results.Public.Ticker;
 
@@ -11,7 +11,10 @@ import Bit2c.utils.ApiSign;
 import Bit2c.utils.LocalPropLoader;
 import Enums.AssetPairsEnum;
 import lombok.var;
+
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.client.RestTemplate;
 
 import static Bit2c.api.Bit2cEndPoints.*;
@@ -27,22 +30,17 @@ public class NBit2c {
         this.restTemplate = new RestTemplate();
     }
 
-
+// public api requests
     public static Ticker getTicker(AssetPairsEnum.AssetPairs pair){
-        var url = String.format("%s%s%s", Bit2cEndPoints.urlPublicPrefix(), pair,Bit2cEndPoints.urlPublicSuffix(TICKER_INFO));
-
+        var url = Bit2cEndPoints.createPublicUrl(pair, TICKER_INFO);
         var requestsEntity = ApiSign.getRequestPublic(url);
         ResponseEntity<Ticker> response =  new RestTemplate().exchange(requestsEntity,Ticker.class);
-
-       // ResponseEntity<Ticker> response = new RestTemplate().getForEntity(url,Ticker.class, );
         return response.getBody();
     }
 
 
-
-
     public static OrderBook getOrderBook(AssetPairsEnum.AssetPairs pair) {
-        var url = String.format("%s%s%s", Bit2cEndPoints.urlPublicPrefix(), pair,Bit2cEndPoints.urlPublicSuffix(ORDER_BOOK));
+        var url =  Bit2cEndPoints.createPublicUrl(pair, ORDER_BOOK);                 //String.format("%s%s%s", Bit2cEndPoints.urlPublicPrefix(), pair,Bit2cEndPoints.urlPublicSuffix(ORDER_BOOK));
         var requestsEntity = ApiSign.getRequestPublic(url);
         ResponseEntity<OrderBook> response =  new RestTemplate().exchange(requestsEntity,OrderBook.class);
 
@@ -51,7 +49,7 @@ public class NBit2c {
 
 
     public static OrderBook getOrderBookTop(AssetPairsEnum.AssetPairs pair) {
-        var url = String.format("%s%s%s", Bit2cEndPoints.urlPublicPrefix(), pair,Bit2cEndPoints.urlPublicSuffix(ORDER_BOOK_TOP));
+        var url =  Bit2cEndPoints.createPublicUrl(pair, ORDER_BOOK_TOP);    //String.format("%s%s%s", Bit2cEndPoints.urlPublicPrefix(), pair,Bit2cEndPoints.urlPublicSuffix(ORDER_BOOK_TOP));
         var requestsEntity = ApiSign.getRequestPublic(url);
         ResponseEntity<OrderBook> response =  new RestTemplate().exchange(requestsEntity,OrderBook.class);
 
@@ -59,7 +57,7 @@ public class NBit2c {
     }
 
     public static TradesItem[] getPublicTrades(AssetPairsEnum.AssetPairs pair) {
-        var url = String.format("%s%s%s", Bit2cEndPoints.urlPublicPrefix(), pair,Bit2cEndPoints.urlPublicSuffix(Trades));
+        var url =  Bit2cEndPoints.createPublicUrl(pair, Trades);   // String.format("%s%s%s", Bit2cEndPoints.urlPublicPrefix(), pair,Bit2cEndPoints.urlPublicSuffix(Trades));
         var requestsEntity = ApiSign.getRequestPublic(url);
         ResponseEntity< TradesItem[]> response =  new RestTemplate().exchange(requestsEntity, TradesItem[].class);
 
@@ -67,13 +65,12 @@ public class NBit2c {
     }
 
 
+    // Private api requests
 
-
-    public UserBalance getAccountBalance () {
-       // ApiSign.availableKeys(this.properties);
+    public  UserBalance getAccountBalance() {
         var url = Bit2cEndPoints.url(PRIVATE_BALANCE);
-        var requestsEntity = ApiSign.getRequest(url, KrakenEndpoints.PRIVATE_BALANCE, this.properties);
-        ResponseEntity<AccountBalanceInfo> response = new RestTemplate().postForEntity(url, requestsEntity, AccountBalanceInfo.class);
+        var requestsEntity = ApiSign.getRequest(url, this.properties, HttpMethod.GET);
+        ResponseEntity< UserBalance> response =  new RestTemplate().exchange(requestsEntity, UserBalance.class);
         return response.getBody();
     }
 

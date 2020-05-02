@@ -1,7 +1,6 @@
 package Bit2c.entities.results.Public;
 
 
-
 import lombok.Data;
 import java.math.BigDecimal;
 

@@ -1,5 +1,7 @@
 package Bit2c.api;
 
+import Enums.AssetPairsEnum;
+
 public final class Bit2cEndPoints {
 
     public static String BASE_API = "https://bit2c.co.il";
@@ -26,7 +28,6 @@ public final class Bit2cEndPoints {
     public static String CANCEL_ORDER = "/Order/CancelOrder";
     public static String ADD_BUY_MARKET_ORDER = "/Order/AddOrderMarketPriceBuy";
     public static String ADD_SELL_MARKET_ORDER = "/Order/AddOrderMarketPriceSell";
-
     public static String ADD_STOP_LIMIT_ORDER = "/Order/AddStopOrder";
 
 
@@ -35,14 +36,16 @@ public final class Bit2cEndPoints {
         return BASE_API + path;
     }
 
-    public static String urlPublicSuffix(String path) {
-        return path;
 
-    }
 
-    public static String urlPublicPrefix() {
+    private static String urlPublicPrefix() {
         return BASE_API_PUBLIC;
     }
 
 
+    public static String createPublicUrl(AssetPairsEnum.AssetPairs pair, String endpointSuffix) {
+        String fullURL = String.format("%s%s%s", Bit2cEndPoints.urlPublicPrefix(), pair,endpointSuffix);
+        return fullURL;
+
+    }
 }
