@@ -6,11 +6,11 @@ import java.math.BigDecimal;
 
 @Data
 public class Ticker {
-    public BigDecimal ll;
-    public BigDecimal av;
-    public BigDecimal a;
-    public BigDecimal h;
-    public BigDecimal l;
+    private BigDecimal ll;
+    private BigDecimal av;
+    private BigDecimal a;
+    private BigDecimal h;
+    private BigDecimal l;
 
 
 }

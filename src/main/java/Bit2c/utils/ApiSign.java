@@ -79,12 +79,16 @@ public class ApiSign {
         data += "nonce=" + nonce;
 
 
+
+         if (httpMethod.equals(HttpMethod.GET)){
+            url += "?" + data;
+        }
         headers.add("key", props.getApiKey());
         headers.add("sign", ApiSign.calculateSignature(  data, props.getApiSec()));
         headers.add("User-Agent", "Mozilla/4.76");
 
         headers.setContentType(MediaType.APPLICATION_FORM_URLENCODED);
-        url += "?" + data;
+
         try {
             return new RequestEntity<String>(data, headers,httpMethod, new URI(url));
         } catch (URISyntaxException e) {

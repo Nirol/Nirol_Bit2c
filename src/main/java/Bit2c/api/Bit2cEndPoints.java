@@ -21,14 +21,20 @@ public final class Bit2cEndPoints {
     public static String PRIVATE_BALANCE = "/Account/Balance";
     public static String OPEN_ORDERS = "/Order/MyOrders";
     public static String ORDER_BY_ID = "/Order/GetById";
-    public static String ACCOUNT_HISTORY = "/Order/AccountHistory";
     public static String ORDER_HISTORY = "/Order/OrderHistory";
-    public static String ORDER_HISTORY_BY_ID = "/Order/HistoryByOrderId";
     public static String ADD_ORDER = "/Order/AddOrder";
     public static String CANCEL_ORDER = "/Order/CancelOrder";
     public static String ADD_BUY_MARKET_ORDER = "/Order/AddOrderMarketPriceBuy";
     public static String ADD_SELL_MARKET_ORDER = "/Order/AddOrderMarketPriceSell";
     public static String ADD_STOP_LIMIT_ORDER = "/Order/AddStopOrder";
+
+    // not using this queries.
+    public static String ACCOUNT_HISTORY = "/Order/AccountHistory";
+
+    public static String ORDER_HISTORY_BY_ID = "/Order/HistoryByOrderId";
+
+
+
 
 
 
